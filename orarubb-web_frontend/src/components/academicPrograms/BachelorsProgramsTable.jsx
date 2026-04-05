@@ -20,17 +20,9 @@ const BachelorsProgramsTable = () => {
   return (
     <div className="programs-table-container">
       <table className="programs-table">
-        <thead>
-          <tr>
-            {/*<th>Studii Licenta</th>*/}
-            {/*<th className="anul-head">Anul</th>*/}
-          </tr>
-        </thead>
         <tbody>
           {sortedSpecializations.map((specialization) => {
-            const years = specialization.years
-              .split(";")
-              .filter(Boolean);
+            const years = specialization.years.split(";").filter(Boolean);
             return (
               <tr key={specialization.academic_specialization_id}>
                 <td>{specialization.name}</td>

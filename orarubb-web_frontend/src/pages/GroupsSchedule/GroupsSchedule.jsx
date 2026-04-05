@@ -53,9 +53,6 @@ const GroupsSchedule = () => {
 
   useEffect(() => {
     if (groupsData && groupsData.groups.length > 0) {
-      // const updatedGroupsList = groupsData.groups.map((group) =>
-      //   group.replace("/", "-")
-      // );
       setGroupsList(groupsData.groups);
     }
   }, [groupsData]);

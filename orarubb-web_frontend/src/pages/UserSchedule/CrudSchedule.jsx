@@ -180,22 +180,11 @@ const CrudSchedule = () => {
           <button className="back-button" onClick={() => navigate(-1)}>
             Înapoi
           </button>
-          {/*<button className="add-button" onClick={() => setIsModalOpen(true)}>*/}
-          {/*  Adaugă*/}
-          {/*</button>*/}
         </div>
 
         <div className="crud-header">
           <h1>Gestionează Orarul tău, {userName}</h1>
         </div>
-
-        {/*<button*/}
-        {/*    className="delete-all-button"*/}
-        {/*    onClick={handleDeleteAll}*/}
-        {/*    disabled={classesForUser.length === 0}*/}
-        {/*>*/}
-        {/*  Șterge Tot*/}
-        {/*</button>*/}
 
         {/*
           6. The table reads directly from classesForUser,

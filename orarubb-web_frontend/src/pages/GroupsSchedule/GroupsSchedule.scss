@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap");
 
 .page-container-gt {
   display: flex;
@@ -17,9 +17,8 @@
 
   @media (max-height: 812px) {
     padding-top: 6rem;
-
   }
-  
+
   .view-toggle {
     display: flex;
     align-items: center;
@@ -66,8 +65,7 @@
       }
 
       input:checked + .slider {
-        background-color: #1A4977;
-        //background-color: #8693b3;
+        background-color: #1a4977;
       }
 
       input:checked + .slider:before {
@@ -79,7 +77,6 @@
       font-size: 1rem;
       margin-left: 10px;
     }
-
   }
 
   .table-container {
@@ -109,17 +106,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    //background-color: #024071;
     padding: 1rem;
     cursor: pointer;
 
     h2 {
       margin: 0;
-      //color:white;
       font-size: 1.2rem;
       font-weight: bold;
     }
-
 
     &:hover {
       background-color: #d6e7ff;
@@ -138,15 +132,13 @@
     animation: slideDown 0.3s ease-out;
   }
   .mark-my-schedule-btn {
-    background-color: #1A4977;
+    background-color: #1a4977;
     color: white;
     border: none;
     padding: 6px 10px;
     border-radius: 4px;
     cursor: pointer;
     margin-left: 1rem;
-
-
   }
 }
 @keyframes slideDown {

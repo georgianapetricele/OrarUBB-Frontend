@@ -37,9 +37,7 @@ const CrudScheduleTable = ({ scheduleData, onDelete }) => {
               <td>
                 {item.startHour} - {item.endHour}
               </td>
-              <td>
-                {formatFrequency(item.frequency)}
-              </td>
+              <td>{formatFrequency(item.frequency)}</td>
               <td>
                 <a href={`/${item.room}`} className="link">
                   {item.room}
@@ -56,12 +54,6 @@ const CrudScheduleTable = ({ scheduleData, onDelete }) => {
                 </a>
               </td>
               <td>
-                {/*<button*/}
-                {/*    className="edit-button"*/}
-                {/*    onClick={() => onEdit(index)}*/}
-                {/*>*/}
-                {/*  Editează*/}
-                {/*</button>*/}
                 <button
                   className="delete-button"
                   onClick={() => onDelete(index)}
