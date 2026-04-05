@@ -8,8 +8,6 @@ const AllCoursesPage = () => {
   const { data: courses = [] } =
     useGetAllCourseInstancesByLanguageQuery("ro-RO");
 
-  //const mockCourses = getCourses();
-
   return (
     <Layout>
       <div className="page">

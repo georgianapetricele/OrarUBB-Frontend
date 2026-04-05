@@ -5,7 +5,6 @@ import { useGetAllRoomsQuery } from "../../api/RoomsApi";
 import { LoadingComponent } from "../../components/LoadingComponent";
 
 const AllRoomsPage = () => {
-  //const mockRooms = getAllRooms();
   const { data: rooms = [], isLoading } = useGetAllRoomsQuery();
   return (
     <Layout>
@@ -23,7 +22,7 @@ const AllRoomsPage = () => {
             <Card
               key={room.roomId}
               title={room.name}
-              link={`/room/${room.name.replace(/\//g, "-")}`}
+              link={`/room/${room.name.replaceAll(/\//g, "-")}`}
             />
           ))}
         </div>

@@ -1,4 +1,3 @@
-// Navbar.js
 import { useNavigate } from "react-router-dom";
 import "./Navbar.scss";
 import { useAuth } from "../../utils/AuthContext";
@@ -9,11 +8,12 @@ const Navbar = () => {
 
   const handleLoginClick = async () => {
     try {
-      if (!isAuthenticated) {
-        await login();
-      } else {
+      if (isAuthenticated) {
         await logout();
+        return;
       }
+
+      await login();
     } catch (error) {
       console.error("Authentication error:", error);
     }
@@ -32,11 +32,11 @@ const Navbar = () => {
             <span>Home</span>
           </button>
         </div>
-        <div
+        <button
           className="navbar__logo"
           title="Faculty Logo"
           onClick={() => navigate("/")}
-        ></div>
+        />
         <div className="navbar__right">
           {isAuthenticated ? (
             <>

@@ -1,6 +1,17 @@
 import "./ProfessorScheduleGrafic.scss";
 import PropTypes from "prop-types";
 
+const formatFrequency = (frequency) => {
+  switch (frequency) {
+    case 0:
+      return "Săptămânal";
+    case 1:
+      return "Săptămâna impară";
+    default:
+      return "Săptămâna pară";
+  }
+};
+
 const ProfessorScheduleGrafic = ({ scheduleData, professor }) => {
   const daysOfWeek = ["Luni", "Marti", "Miercuri", "Joi", "Vineri", "Sambata"];
   const timeSlots = Array.from({ length: 12 }, (_, i) => ({
@@ -43,12 +54,7 @@ const ProfessorScheduleGrafic = ({ scheduleData, professor }) => {
                 Sala: {entry.room} <br />
                 Formatia: {entry.formation} <br />
                 Anul: {entry.year} <br />
-                Frecventa:{" "}
-                {entry.frequency === 0
-                  ? "Săptămânal"
-                  : entry.frequency === 1
-                    ? "Săptămâna impară"
-                    : "Săptămâna pară"}
+                Frecventa: {formatFrequency(entry.frequency)}
               </div>
             ))}
           </div>

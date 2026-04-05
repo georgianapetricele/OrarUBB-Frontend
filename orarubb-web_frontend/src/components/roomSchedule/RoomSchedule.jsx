@@ -1,6 +1,21 @@
 import "./RoomSchedule.scss";
 import PropTypes from "prop-types";
 
+const formatFrequency = (frequency) => {
+  switch (frequency) {
+    case 0:
+      return "Săptămânal";
+    case 1:
+      return "Săptămâna impară";
+    default:
+      return "Săptămâna pară";
+  }
+};
+
+const getScheduleRowKey = (item) =>
+  item.classId ??
+  `${item.classDay}-${item.startHour}-${item.endHour}-${item.courseInstanceCode}-${item.formation}-${item.teacherCode ?? item.teacher}`;
+
 const RoomSchedule = ({ scheduleData, room }) => {
   return (
     <div className="room-schedule-table-container">
@@ -18,19 +33,13 @@ const RoomSchedule = ({ scheduleData, room }) => {
           </tr>
         </thead>
         <tbody>
-          {scheduleData.map((item, index) => (
-            <tr key={index}>
+          {scheduleData.map((item) => (
+            <tr key={getScheduleRowKey(item)}>
               <td>{item.classDay}</td>
               <td>
                 {item.startHour} - {item.endHour}
               </td>
-              <td>
-                {item.frequency === 0
-                  ? "Săptămânal"
-                  : item.frequency === 1
-                    ? "Săptămâna impară"
-                    : "Săptămâna pară"}
-              </td>
+              <td>{formatFrequency(item.frequency)}</td>
               <td>{item.formation}</td>
               <td>{item.classType}</td>
               <td>
@@ -54,6 +63,7 @@ const RoomSchedule = ({ scheduleData, room }) => {
 RoomSchedule.propTypes = {
   scheduleData: PropTypes.arrayOf(
     PropTypes.shape({
+      classId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       classDay: PropTypes.string,
       startHour: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       endHour: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

@@ -1,6 +1,17 @@
 import "./CrudScheduleTable.scss";
 import PropTypes from "prop-types";
 
+const formatFrequency = (frequency) => {
+  switch (frequency) {
+    case 0:
+      return "Săptămânal";
+    case 1:
+      return "Săptămâna impară";
+    default:
+      return "Săptămâna pară";
+  }
+};
+
 const CrudScheduleTable = ({ scheduleData, onDelete }) => {
   return (
     <div className="crud-table-container">
@@ -27,11 +38,7 @@ const CrudScheduleTable = ({ scheduleData, onDelete }) => {
                 {item.startHour} - {item.endHour}
               </td>
               <td>
-                {item.frequency === 0
-                  ? "Săptămânal"
-                  : item.frequency === 1
-                    ? "Săptămâna impară"
-                    : "Săptămâna pară"}
+                {formatFrequency(item.frequency)}
               </td>
               <td>
                 <a href={`/${item.room}`} className="link">

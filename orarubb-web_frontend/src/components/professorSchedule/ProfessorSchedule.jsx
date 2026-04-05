@@ -1,6 +1,17 @@
 import "./ProfessorSchedule.scss";
 import PropTypes from "prop-types";
 
+const formatFrequency = (frequency) => {
+  switch (frequency) {
+    case 0:
+      return "Săptămânal";
+    case 1:
+      return "Săptămâna impară";
+    default:
+      return "Săptămâna pară";
+  }
+};
+
 const ProfessorSchedule = ({ scheduleData, professor }) => {
   console.log("Data", scheduleData);
   return (
@@ -26,13 +37,7 @@ const ProfessorSchedule = ({ scheduleData, professor }) => {
               <td>
                 {item.startHour} - {item.endHour}
               </td>
-              <td>
-                {item.frequency === 0
-                  ? "Săptămânal"
-                  : item.frequency === 1
-                    ? "Săptămâna impară"
-                    : "Săptămâna pară"}
-              </td>
+              <td>{formatFrequency(item.frequency)}</td>
               <td>
                 <a href={`#${item.room}`} className="link">
                   {item.room}

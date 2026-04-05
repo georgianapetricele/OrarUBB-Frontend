@@ -81,11 +81,6 @@
   }
 }
 
-/* Make the table scrollable horizontally on smaller screens */
-.room-schedule-table-container {
-  overflow-x: auto; /* Allow horizontal scrolling */
-}
-
 /* Responsive Styles */
 @media (max-width: 1024px) {
   .table-title {

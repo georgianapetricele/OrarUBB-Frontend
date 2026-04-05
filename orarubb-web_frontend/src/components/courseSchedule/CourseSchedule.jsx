@@ -2,6 +2,17 @@ import { NoDataComponent } from "../NoDataComponent";
 import PropTypes from "prop-types";
 import "../professorSchedule/ProfessorSchedule.scss";
 
+const formatFrequency = (frequency) => {
+  switch (frequency) {
+    case 0:
+      return "Săptămânal";
+    case 1:
+      return "Săptămâna impară";
+    default:
+      return "Săptămâna pară";
+  }
+};
+
 const CourseSchedule = ({ scheduleData }) => {
   console.log("Data", scheduleData);
   return (
@@ -32,13 +43,7 @@ const CourseSchedule = ({ scheduleData }) => {
                 <td>
                   {item.startHour} - {item.endHour}
                 </td>
-                <td>
-                  {item.frequency === 0
-                    ? "Săptămânal"
-                    : item.frequency === 1
-                      ? "Săptămâna impară"
-                      : "Săptămâna pară"}
-                </td>
+                <td>{formatFrequency(item.frequency)}</td>
                 <td>
                   <a href={`#${item.room}`} className="link">
                     {item.room}

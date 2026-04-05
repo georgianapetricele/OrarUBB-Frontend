@@ -18,20 +18,20 @@ const RoomsAvailability = ({ data, allRooms }) => {
     <div className="rooms-availability-scrollable-container">
       <table border="1px solid black">
         <tbody>
-          {days.map((day, dayIndex) => {
+          {days.map((day) => {
             // Filter data for the current day
             // console.log(data);
             const dayData = data.filter((item) => item.classDay === day);
             // console.log(dayData)
 
             return (
-              <React.Fragment key={dayIndex}>
+              <React.Fragment key={day}>
                 {/* Header Row */}
                 <tr>
                   <th className="room">&nbsp;</th>
                   <th className="room">&nbsp;</th>
-                  {allRooms.map((room, roomIndex) => (
-                    <th className="room" key={roomIndex}>
+                  {allRooms.map((room) => (
+                    <th className="room" key={room.name}>
                       <a href={`/room/${room.name.replace(/\//g, "-")}`}>
                         {room.name}
                       </a>
@@ -44,12 +44,12 @@ const RoomsAvailability = ({ data, allRooms }) => {
                   const currentHour = 8 + rowIndex;
 
                   return (
-                    <tr key={`morning-${dayIndex}-${rowIndex}`}>
+                    <tr key={`morning-${day}-${currentHour}`}>
                       <td className="sticky">{day}</td>
                       <td className="hour">
                         {currentHour}-{currentHour + 1}
                       </td>
-                      {allRooms.map((room, roomIndex) => {
+                      {allRooms.map((room) => {
                         const roomData = dayData.find(
                           (item) =>
                             item.startHour === currentHour &&
@@ -62,10 +62,10 @@ const RoomsAvailability = ({ data, allRooms }) => {
                           : undefined;
 
                         return (
-                          <td key={roomIndex}>
-                            {frequency !== undefined
-                              ? getFrequencySymbol(frequency)
-                              : ""}
+                          <td key={room.name}>
+                            {frequency === undefined
+                              ? ""
+                              : getFrequencySymbol(frequency)}
                           </td>
                         );
                       })}
@@ -77,8 +77,8 @@ const RoomsAvailability = ({ data, allRooms }) => {
                 <tr>
                   <th className="room">&nbsp;</th>
                   <th className="room">&nbsp;</th>
-                  {allRooms.map((room, roomIndex) => (
-                    <th className="room" key={roomIndex}>
+                  {allRooms.map((room) => (
+                    <th className="room" key={room.name}>
                       {room.name}
                     </th>
                   ))}
@@ -89,12 +89,12 @@ const RoomsAvailability = ({ data, allRooms }) => {
                   const currentHour = 14 + rowIndex;
 
                   return (
-                    <tr key={`afternoon-${dayIndex}-${rowIndex}`}>
+                    <tr key={`afternoon-${day}-${currentHour}`}>
                       <td className="sticky">{day}</td>
                       <td className="hour">
                         {currentHour}-{currentHour + 1}
                       </td>
-                      {allRooms.map((room, roomIndex) => {
+                      {allRooms.map((room) => {
                         const roomData = dayData.find(
                           (item) =>
                             item.startHour === currentHour &&
@@ -107,10 +107,10 @@ const RoomsAvailability = ({ data, allRooms }) => {
                           : undefined;
 
                         return (
-                          <td key={roomIndex}>
-                            {frequency !== undefined
-                              ? getFrequencySymbol(frequency)
-                              : ""}
+                          <td key={room.name}>
+                            {frequency === undefined
+                              ? ""
+                              : getFrequencySymbol(frequency)}
                           </td>
                         );
                       })}

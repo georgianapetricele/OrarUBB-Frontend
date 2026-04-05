@@ -3,6 +3,21 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
+const formatFrequency = (frequency) => {
+  switch (frequency) {
+    case 0:
+      return "Săptămânal";
+    case 1:
+      return "Săptămâna impară";
+    default:
+      return "Săptămâna pară";
+  }
+};
+
+const getScheduleRowKey = (item) =>
+  item.classId ??
+  `${item.classDay}-${item.startHour}-${item.endHour}-${item.courseInstanceCode}-${item.room}-${item.formation}-${item.teacherCode ?? item.teacher}`;
+
 const GroupsScheduleTabelar = ({
   scheduleData,
   identity,
@@ -46,12 +61,12 @@ const GroupsScheduleTabelar = ({
             <th>Formatia</th>
             <th>Tipul</th>
             <th>Disciplina</th>
-            {tableType !== "teacher" ? <th>Cadrul didactic</th> : null}
+            {tableType === "teacher" ? null : <th>Cadrul didactic</th>}
           </tr>
         </thead>
         <tbody>
-          {scheduleData.map((item, index) => (
-            <tr key={index}>
+          {scheduleData.map((item) => (
+            <tr key={getScheduleRowKey(item)}>
               {isMobileView ? (
                 <td className="mobile-view-td-gt">
                   {item.classDay} {item.startHour}-{item.endHour}
@@ -64,16 +79,10 @@ const GroupsScheduleTabelar = ({
                   </td>
                 </>
               )}
-              <td data-label="Frecventa">
-                {item.frequency === 0
-                  ? "Săptămânal"
-                  : item.frequency === 1
-                    ? "Săptămâna impară"
-                    : "Săptămâna pară"}
-              </td>
+              <td data-label="Frecventa">{formatFrequency(item.frequency)}</td>
               <td data-label="Sala">
                 <Link
-                  to={`/room/${item.room.replace(/\//g, "-")}`}
+                  to={`/room/${item.room.replaceAll(/\//g, "-")}`}
                   className="link-gt"
                 >
                   {item.room}
@@ -89,13 +98,13 @@ const GroupsScheduleTabelar = ({
                   {item.courseInstanceName}
                 </Link>
               </td>
-              {tableType !== "teacher" ? (
+              {tableType === "teacher" ? null : (
                 <td data-label="Profesor">
                   <Link to={`/teacher/${item.teacherCode}`} className="link-gt">
                     {item.teacher}
                   </Link>
                 </td>
-              ) : null}
+              )}
             </tr>
           ))}
         </tbody>
@@ -107,6 +116,7 @@ const GroupsScheduleTabelar = ({
 GroupsScheduleTabelar.propTypes = {
   scheduleData: PropTypes.arrayOf(
     PropTypes.shape({
+      classId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       classDay: PropTypes.string,
       startHour: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       endHour: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

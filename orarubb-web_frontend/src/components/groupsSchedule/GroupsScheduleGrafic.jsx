@@ -1,6 +1,17 @@
 import "./GroupsScheduleGrafic.scss";
 import PropTypes from "prop-types";
 
+const formatFrequency = (frequency) => {
+  switch (frequency) {
+    case 0:
+      return "Săptămânal";
+    case 1:
+      return "Săptămâna impară";
+    default:
+      return "Săptămâna pară";
+  }
+};
+
 const GroupsScheduleGrafic = ({ scheduleData, group, showHeader }) => {
   const daysOfWeek = ["Luni", "Marti", "Miercuri", "Joi", "Vineri", "Sambata"];
 
@@ -100,13 +111,7 @@ const GroupsScheduleGrafic = ({ scheduleData, group, showHeader }) => {
                       <td>
                         <strong>Frecvență:</strong>
                       </td>
-                      <td>
-                        {entry.frequency === 0
-                          ? "Săptămânal"
-                          : entry.frequency === 1
-                            ? "Săptămâna impară"
-                            : "Săptămâna pară"}
-                      </td>
+                      <td>{formatFrequency(entry.frequency)}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -206,11 +211,7 @@ const GroupsScheduleGrafic = ({ scheduleData, group, showHeader }) => {
                     </div>
                     <div>
                       <strong>Frecvență:</strong>{" "}
-                      {entry.frequency === 0
-                        ? "Săptămânal"
-                        : entry.frequency === 1
-                          ? "Săptămâna impară"
-                          : "Săptămâna pară"}
+                      {formatFrequency(entry.frequency)}
                     </div>
                   </div>
                 </div>
