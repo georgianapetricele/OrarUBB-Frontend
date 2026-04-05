@@ -1,0 +1,6 @@
+projectKey=SQFrontend
+serverUrl=http://localhost:9000
+serverVersion=26.3.0.120487
+dashboardUrl=http://localhost:9000/dashboard?id=SQFrontend
+ceTaskId=357b656a-3ccd-49c8-87c3-8974c06ea841
+ceTaskUrl=http://localhost:9000/api/ce/task?id=357b656a-3ccd-49c8-87c3-8974c06ea841

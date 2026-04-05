@@ -1,9 +1,6 @@
 import { useState } from "react";
 import Layout from "../../components/layout/Layout";
-import ProfessorSchedule from "../../components/professorSchedule/ProfessorSchedule";
-import ProfessorScheduleGrafic from "../../components/professorSchedule/ProfessorScheduleGrafic";
 import { useParams } from "react-router-dom";
-import { useGetClassesForTeacherQuery } from "../../api/TeachersApi";
 import { LoadingComponent } from "../../components/LoadingComponent";
 import { useGetClassesForCourseQuery } from "../../api/CoursesApi";
 import CourseSchedule from "../../components/courseSchedule/CourseSchedule";
@@ -59,15 +56,9 @@ const CoursesSchedule = () => {
 
         <div>
           {view === "tabelar" ? (
-            <CourseSchedule
-              scheduleData={scheduleDataForCourse}
-              course={courseCode}
-            />
+            <CourseSchedule scheduleData={scheduleDataForCourse} />
           ) : (
-            <CourseScheduleGrafic
-              scheduleData={scheduleDataForCourse}
-              course={courseCode}
-            />
+            <CourseScheduleGrafic scheduleData={scheduleDataForCourse} />
           )}
         </div>
       </div>

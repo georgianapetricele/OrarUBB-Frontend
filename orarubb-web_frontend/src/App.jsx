@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes, ScrollRestoration, useLocation} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { MsalProvider } from "@azure/msal-react";
 import { msalInstance } from "./utils/authenticationConfig.js";
 import "./App.scss";
@@ -22,16 +22,15 @@ import { store, persistor } from "./api/Persistence.js";
 import { PersistGate } from "redux-persist/integration/react";
 import CoursesSchedule from "./pages/CoursesSchedule/CoursesSchedule.jsx";
 
-
 const AppContent = () => {
   return (
     <BrowserRouter
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true
-        }}
-        basename="/apps/orar">
-
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+      basename="/apps/orar"
+    >
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<LandingPage />} />
@@ -73,8 +72,7 @@ function App() {
       <AuthProvider>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
-
-              <AppContent />
+            <AppContent />
           </PersistGate>
         </Provider>
       </AuthProvider>

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 import "./Button.scss";
 
 const Button = ({
@@ -28,6 +29,15 @@ const Button = ({
       {label}
     </button>
   );
+};
+
+Button.propTypes = {
+  color: PropTypes.string.isRequired,
+  label: PropTypes.node.isRequired,
+  onClick: PropTypes.func,
+  shape: PropTypes.string,
+  size: PropTypes.string,
+  to: PropTypes.string,
 };
 
 export default Button;

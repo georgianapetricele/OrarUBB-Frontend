@@ -1,6 +1,5 @@
-import React from "react";
-import './ProfessorScheduleGrafic.scss'
-
+import "./ProfessorScheduleGrafic.scss";
+import PropTypes from "prop-types";
 
 const ProfessorScheduleGrafic = ({ scheduleData, professor }) => {
   const daysOfWeek = ["Luni", "Marti", "Miercuri", "Joi", "Vineri", "Sambata"];
@@ -14,15 +13,16 @@ const ProfessorScheduleGrafic = ({ scheduleData, professor }) => {
       (item) =>
         item.classDay === day &&
         item.startHour <= timeSlot.start &&
-        item.endHour > timeSlot.start
+        item.endHour > timeSlot.start,
     );
 
     const startingClasses = matchingClasses.filter(
-      (item) => item.startHour === timeSlot.start
+      (item) => item.startHour === timeSlot.start,
     );
 
     const ongoingClasses = matchingClasses.filter(
-      (item) => item.startHour < timeSlot.start && item.endHour > timeSlot.start
+      (item) =>
+        item.startHour < timeSlot.start && item.endHour > timeSlot.start,
     );
 
     if (startingClasses.length > 0) {
@@ -47,8 +47,8 @@ const ProfessorScheduleGrafic = ({ scheduleData, professor }) => {
                 {entry.frequency === 0
                   ? "Săptămânal"
                   : entry.frequency === 1
-                  ? "Săptămâna impară"
-                  : "Săptămâna pară"}
+                    ? "Săptămâna impară"
+                    : "Săptămâna pară"}
               </div>
             ))}
           </div>
@@ -83,6 +83,24 @@ const ProfessorScheduleGrafic = ({ scheduleData, professor }) => {
       </table>
     </div>
   );
+};
+
+ProfessorScheduleGrafic.propTypes = {
+  scheduleData: PropTypes.arrayOf(
+    PropTypes.shape({
+      classDay: PropTypes.string,
+      startHour: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      endHour: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      frequency: PropTypes.number,
+      room: PropTypes.string,
+      formation: PropTypes.string,
+      year: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      classType: PropTypes.string,
+      courseInstanceName: PropTypes.string,
+      courseInstanceCode: PropTypes.string,
+    }),
+  ).isRequired,
+  professor: PropTypes.string,
 };
 
 export default ProfessorScheduleGrafic;

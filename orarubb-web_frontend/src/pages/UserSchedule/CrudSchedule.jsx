@@ -1,10 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import "./CrudSchedule.scss";
 import Layout from "../../components/layout/Layout";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CrudScheduleTable from "../../components/crudSchedule/CrudScheduleTable";
 import { useAuth } from "../../utils/AuthContext.jsx";
-import { useGetClassesForUserQuery, userClassesApi } from "../../api/UserClassesApi.js";
+import {
+  useGetClassesForUserQuery,
+  userClassesApi,
+} from "../../api/UserClassesApi.js";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useDispatch } from "react-redux";
 
@@ -27,8 +30,7 @@ const dayOrder = {
  */
 function sortScheduleData(data) {
   return [...data].sort((a, b) => {
-    const dayComparison =
-        dayOrder[a.classDay] - dayOrder[b.classDay];
+    const dayComparison = dayOrder[a.classDay] - dayOrder[b.classDay];
 
     if (dayComparison === 0) {
       return a.startHour - b.startHour;
@@ -45,7 +47,7 @@ const CrudSchedule = () => {
 
   // 1. Fetch your data once from RTK Query
   const { data: classesForUser } = useGetClassesForUserQuery(
-      userId ? { userCode: userId, language: "ro-RO" } : skipToken
+    userId ? { userCode: userId, language: "ro-RO" } : skipToken,
   );
 
   // 2. We do NOT store schedule in local state or localStorage.
@@ -80,38 +82,38 @@ const CrudSchedule = () => {
     if (editingIndex === null) {
       // ADD
       dispatch(
-          userClassesApi.util.updateQueryData(
-              "getClassesForUser",
-              { userCode: userId, language: "ro-RO" },
-              (draft) => {
-                // draft is a mutable array (immer-proxy)
-                draft.push({
-                  ...form,
-                  classId: form.classId || crypto.randomUUID(),
-                });
+        userClassesApi.util.updateQueryData(
+          "getClassesForUser",
+          { userCode: userId, language: "ro-RO" },
+          (draft) => {
+            // draft is a mutable array (immer-proxy)
+            draft.push({
+              ...form,
+              classId: form.classId || crypto.randomUUID(),
+            });
 
-                // Re-sort after adding
-                sortScheduleData(draft);
-              }
-          )
+            // Re-sort after adding
+            sortScheduleData(draft);
+          },
+        ),
       );
     } else {
       // UPDATE
       dispatch(
-          userClassesApi.util.updateQueryData(
-              "getClassesForUser",
-              { userCode: userId, language: "ro-RO" },
-              (draft) => {
-                // Replace the item at `editingIndex`
-                draft[editingIndex] = {
-                  ...form,
-                  classId: draft[editingIndex].classId, // keep existing ID
-                };
+        userClassesApi.util.updateQueryData(
+          "getClassesForUser",
+          { userCode: userId, language: "ro-RO" },
+          (draft) => {
+            // Replace the item at `editingIndex`
+            draft[editingIndex] = {
+              ...form,
+              classId: draft[editingIndex].classId, // keep existing ID
+            };
 
-                // Re-sort after editing
-                sortScheduleData(draft);
-              }
-          )
+            // Re-sort after editing
+            sortScheduleData(draft);
+          },
+        ),
       );
     }
 
@@ -128,27 +130,13 @@ const CrudSchedule = () => {
   const handleDelete = (index) => {
     if (window.confirm("Ești sigur că vrei să ștergi această intrare?")) {
       dispatch(
-          userClassesApi.util.updateQueryData(
-              "getClassesForUser",
-              { userCode: userId, language: "ro-RO" },
-              (draft) => {
-                draft.splice(index, 1);
-              }
-          )
-      );
-    }
-  };
-
-  const handleDeleteAll = () => {
-    if (window.confirm("Ești sigur că vrei să ștergi toate datele?")) {
-      dispatch(
-          userClassesApi.util.updateQueryData(
-              "getClassesForUser",
-              { userCode: userId, language: "ro-RO" },
-              (draft) => {
-                draft.splice(0, draft.length);
-              }
-          )
+        userClassesApi.util.updateQueryData(
+          "getClassesForUser",
+          { userCode: userId, language: "ro-RO" },
+          (draft) => {
+            draft.splice(index, 1);
+          },
+        ),
       );
     }
   };
@@ -179,173 +167,173 @@ const CrudSchedule = () => {
   //    (You can customize this as needed.)
   if (!classesForUser) {
     return (
-        <Layout>
-          <p>Loading or no data...</p>
-        </Layout>
+      <Layout>
+        <p>Loading or no data...</p>
+      </Layout>
     );
   }
 
   return (
-      <Layout>
-        <div className="crud-schedule-page">
-          <div className="crud-header-actions">
-            <button className="back-button" onClick={() => navigate(-1)}>
-              Înapoi
-            </button>
-            {/*<button className="add-button" onClick={() => setIsModalOpen(true)}>*/}
-            {/*  Adaugă*/}
-            {/*</button>*/}
-          </div>
-
-          <div className="crud-header">
-            <h1>Gestionează Orarul tău, {userName}</h1>
-          </div>
-
-          {/*<button*/}
-          {/*    className="delete-all-button"*/}
-          {/*    onClick={handleDeleteAll}*/}
-          {/*    disabled={classesForUser.length === 0}*/}
-          {/*>*/}
-          {/*  Șterge Tot*/}
+    <Layout>
+      <div className="crud-schedule-page">
+        <div className="crud-header-actions">
+          <button className="back-button" onClick={() => navigate(-1)}>
+            Înapoi
+          </button>
+          {/*<button className="add-button" onClick={() => setIsModalOpen(true)}>*/}
+          {/*  Adaugă*/}
           {/*</button>*/}
+        </div>
 
-          {/*
+        <div className="crud-header">
+          <h1>Gestionează Orarul tău, {userName}</h1>
+        </div>
+
+        {/*<button*/}
+        {/*    className="delete-all-button"*/}
+        {/*    onClick={handleDeleteAll}*/}
+        {/*    disabled={classesForUser.length === 0}*/}
+        {/*>*/}
+        {/*  Șterge Tot*/}
+        {/*</button>*/}
+
+        {/*
           6. The table reads directly from classesForUser,
              which is the same array we modify in updateQueryData
         */}
-          <CrudScheduleTable
-              scheduleData={sortScheduleData(classesForUser)}
-              onEdit={(index) => handleEdit(index, classesForUser[index])}
-              onDelete={handleDelete}
-          />
+        <CrudScheduleTable
+          scheduleData={sortScheduleData(classesForUser)}
+          onEdit={(index) => handleEdit(index, classesForUser[index])}
+          onDelete={handleDelete}
+        />
 
-          {isModalOpen && (
-              <div className="modal-overlay">
-                <div className="modal">
-                  <h2>{editingIndex !== null ? "Editează" : "Adaugă"} Orar</h2>
-                  <form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        handleAddOrUpdate();
-                      }}
-                  >
-                    <div className="crud-form-group">
-                      <label>Ziua</label>
-                      <input
-                          type="text"
-                          name="classDay"
-                          value={form.classDay}
-                          onChange={handleInputChange}
-                          required
-                      />
-                    </div>
-                    <div className="crud-form-group">
-                      <label>Ora Început</label>
-                      <input
-                          type="number"
-                          name="startHour"
-                          value={form.startHour}
-                          onChange={handleInputChange}
-                          required
-                      />
-                    </div>
-                    <div className="crud-form-group">
-                      <label>Ora Sfârșit</label>
-                      <input
-                          type="number"
-                          name="endHour"
-                          value={form.endHour}
-                          onChange={handleInputChange}
-                          required
-                      />
-                    </div>
-                    <div className="crud-form-group">
-                      <label>Frecvență (0 = săptămânal)</label>
-                      <input
-                          type="number"
-                          name="frequency"
-                          value={form.frequency}
-                          onChange={handleInputChange}
-                      />
-                    </div>
-                    <div className="crud-form-group">
-                      <label>Sală</label>
-                      <input
-                          type="text"
-                          name="room"
-                          value={form.room}
-                          onChange={handleInputChange}
-                          required
-                      />
-                    </div>
-                    <div className="crud-form-group">
-                      <label>Formația</label>
-                      <input
-                          type="text"
-                          name="formation"
-                          value={form.formation}
-                          onChange={handleInputChange}
-                      />
-                    </div>
-                    <div className="crud-form-group">
-                      <label>Tip Curs</label>
-                      <input
-                          type="text"
-                          name="classType"
-                          value={form.classType}
-                          onChange={handleInputChange}
-                          required
-                      />
-                    </div>
-                    <div className="crud-form-group">
-                      <label>Cod Curs</label>
-                      <input
-                          type="text"
-                          name="courseInstanceCode"
-                          value={form.courseInstanceCode}
-                          onChange={handleInputChange}
-                          required
-                      />
-                    </div>
-                    <div className="crud-form-group">
-                      <label>Nume Curs</label>
-                      <input
-                          type="text"
-                          name="courseInstanceName"
-                          value={form.courseInstanceName}
-                          onChange={handleInputChange}
-                      />
-                    </div>
-                    <div className="crud-form-group">
-                      <label>Profesor</label>
-                      <input
-                          type="text"
-                          name="teacher"
-                          value={form.teacher}
-                          onChange={handleInputChange}
-                          required
-                      />
-                    </div>
-
-                    <button type="submit" className="submit-button">
-                      {editingIndex !== null ? "Actualizează" : "Adaugă"}
-                    </button>
-                    <button
-                        type="button"
-                        className="cancel-button"
-                        onClick={() => {
-                          resetForm();
-                          setIsModalOpen(false);
-                        }}
-                    >
-                      Anulează
-                    </button>
-                  </form>
+        {isModalOpen && (
+          <div className="modal-overlay">
+            <div className="modal">
+              <h2>{editingIndex !== null ? "Editează" : "Adaugă"} Orar</h2>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleAddOrUpdate();
+                }}
+              >
+                <div className="crud-form-group">
+                  <label>Ziua</label>
+                  <input
+                    type="text"
+                    name="classDay"
+                    value={form.classDay}
+                    onChange={handleInputChange}
+                    required
+                  />
                 </div>
-              </div>
-          )}
-        </div>
-      </Layout>
+                <div className="crud-form-group">
+                  <label>Ora Început</label>
+                  <input
+                    type="number"
+                    name="startHour"
+                    value={form.startHour}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="crud-form-group">
+                  <label>Ora Sfârșit</label>
+                  <input
+                    type="number"
+                    name="endHour"
+                    value={form.endHour}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="crud-form-group">
+                  <label>Frecvență (0 = săptămânal)</label>
+                  <input
+                    type="number"
+                    name="frequency"
+                    value={form.frequency}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="crud-form-group">
+                  <label>Sală</label>
+                  <input
+                    type="text"
+                    name="room"
+                    value={form.room}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="crud-form-group">
+                  <label>Formația</label>
+                  <input
+                    type="text"
+                    name="formation"
+                    value={form.formation}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="crud-form-group">
+                  <label>Tip Curs</label>
+                  <input
+                    type="text"
+                    name="classType"
+                    value={form.classType}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="crud-form-group">
+                  <label>Cod Curs</label>
+                  <input
+                    type="text"
+                    name="courseInstanceCode"
+                    value={form.courseInstanceCode}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="crud-form-group">
+                  <label>Nume Curs</label>
+                  <input
+                    type="text"
+                    name="courseInstanceName"
+                    value={form.courseInstanceName}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="crud-form-group">
+                  <label>Profesor</label>
+                  <input
+                    type="text"
+                    name="teacher"
+                    value={form.teacher}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <button type="submit" className="submit-button">
+                  {editingIndex !== null ? "Actualizează" : "Adaugă"}
+                </button>
+                <button
+                  type="button"
+                  className="cancel-button"
+                  onClick={() => {
+                    resetForm();
+                    setIsModalOpen(false);
+                  }}
+                >
+                  Anulează
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
+      </div>
+    </Layout>
   );
 };
 

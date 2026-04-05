@@ -1,4 +1,5 @@
 import "./RoomSchedule.scss";
+import PropTypes from "prop-types";
 
 const RoomSchedule = ({ scheduleData, room }) => {
   return (
@@ -27,8 +28,8 @@ const RoomSchedule = ({ scheduleData, room }) => {
                 {item.frequency === 0
                   ? "Săptămânal"
                   : item.frequency === 1
-                  ? "Săptămâna impară"
-                  : "Săptămâna pară"}
+                    ? "Săptămâna impară"
+                    : "Săptămâna pară"}
               </td>
               <td>{item.formation}</td>
               <td>{item.classType}</td>
@@ -48,6 +49,24 @@ const RoomSchedule = ({ scheduleData, room }) => {
       </table>
     </div>
   );
+};
+
+RoomSchedule.propTypes = {
+  scheduleData: PropTypes.arrayOf(
+    PropTypes.shape({
+      classDay: PropTypes.string,
+      startHour: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      endHour: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      frequency: PropTypes.number,
+      formation: PropTypes.string,
+      classType: PropTypes.string,
+      courseInstanceCode: PropTypes.string,
+      courseInstanceName: PropTypes.string,
+      teacher: PropTypes.string,
+      teacherCode: PropTypes.string,
+    }),
+  ).isRequired,
+  room: PropTypes.string,
 };
 
 export default RoomSchedule;

@@ -1,50 +1,46 @@
-@use '../utils/colors.scss';
+@use "../utils/colors.scss";
 
 .card {
-    background-color: colors.$primary-dark-blue;
-    color: colors.$text-white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 75%;
-    padding: 10px 6px;
-    align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.1s;
-    width: 100%;
-    max-width: 250px;
+  background-color: colors.$primary-dark-blue;
+  color: colors.$text-white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 75%;
+  padding: 10px 6px;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.1s;
+  width: 100%;
+  max-width: 250px;
 }
-.page{
-  //padding: 7rem 1rem 0 1rem;
 
-}
 .card:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .cards-list {
-   display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
-    gap: 20px;
-    align-items: stretch;
-    margin: 0 4rem;
-    @media (max-width: 1024px) {
-
-        margin: 0 2rem;
-    }
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: 20px;
+  align-items: stretch;
+  margin: 0 4rem;
+  @media (max-width: 1024px) {
+    margin: 0 2rem;
+  }
 }
 
 .card-title {
-    font-size: 19px;
-    margin: 0;
-    font-weight: 500;
+  font-size: 19px;
+  margin: 0;
+  font-weight: 500;
 }
 
 .card-subtitle {
-    font-size: 17px;
-    margin-top: 5px;
-    margin-bottom: 0px;
+  font-size: 17px;
+  margin-top: 5px;
+  margin-bottom: 0px;
 }

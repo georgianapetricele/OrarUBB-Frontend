@@ -1,8 +1,14 @@
 import "./GroupsScheduleTabelar.scss";
-import {Link, ScrollRestoration} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
-const GroupsScheduleTabelar = ({ scheduleData, identity, showHeader, tableType }) => {
+const GroupsScheduleTabelar = ({
+  scheduleData,
+  identity,
+  showHeader,
+  tableType,
+}) => {
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 920);
   useEffect(() => {
     const handleResize = () => {
@@ -22,7 +28,6 @@ const GroupsScheduleTabelar = ({ scheduleData, identity, showHeader, tableType }
           {tableType === "personal" ? "Orarul tau" : null}
           {tableType === "teacher" ? "Orar " + identity : null}
           {tableType === "group" ? "Grupa " + identity : null}
-
         </h2>
       ) : null}
       <table className="table-gt">
@@ -41,11 +46,7 @@ const GroupsScheduleTabelar = ({ scheduleData, identity, showHeader, tableType }
             <th>Formatia</th>
             <th>Tipul</th>
             <th>Disciplina</th>
-            {
-              tableType !== "teacher" ? (
-                  <th>Cadrul didactic</th>
-              ) : null
-            }
+            {tableType !== "teacher" ? <th>Cadrul didactic</th> : null}
           </tr>
         </thead>
         <tbody>
@@ -67,8 +68,8 @@ const GroupsScheduleTabelar = ({ scheduleData, identity, showHeader, tableType }
                 {item.frequency === 0
                   ? "Săptămânal"
                   : item.frequency === 1
-                  ? "Săptămâna impară"
-                  : "Săptămâna pară"}
+                    ? "Săptămâna impară"
+                    : "Săptămâna pară"}
               </td>
               <td data-label="Sala">
                 <Link
@@ -88,23 +89,40 @@ const GroupsScheduleTabelar = ({ scheduleData, identity, showHeader, tableType }
                   {item.courseInstanceName}
                 </Link>
               </td>
-              {
-                tableType !== "teacher" ? (
-                    <td data-label="Profesor">
-                      <Link to={`/teacher/${item.teacherCode}`} className="link-gt">
-                        {item.teacher}
-                      </Link>
-                    </td>
-                ) : null
-              }
-
+              {tableType !== "teacher" ? (
+                <td data-label="Profesor">
+                  <Link to={`/teacher/${item.teacherCode}`} className="link-gt">
+                    {item.teacher}
+                  </Link>
+                </td>
+              ) : null}
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-
   );
+};
+
+GroupsScheduleTabelar.propTypes = {
+  scheduleData: PropTypes.arrayOf(
+    PropTypes.shape({
+      classDay: PropTypes.string,
+      startHour: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      endHour: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      frequency: PropTypes.number,
+      room: PropTypes.string,
+      formation: PropTypes.string,
+      classType: PropTypes.string,
+      courseInstanceCode: PropTypes.string,
+      courseInstanceName: PropTypes.string,
+      teacher: PropTypes.string,
+      teacherCode: PropTypes.string,
+    }),
+  ).isRequired,
+  identity: PropTypes.string,
+  showHeader: PropTypes.bool,
+  tableType: PropTypes.oneOf(["personal", "teacher", "group"]),
 };
 
 export default GroupsScheduleTabelar;

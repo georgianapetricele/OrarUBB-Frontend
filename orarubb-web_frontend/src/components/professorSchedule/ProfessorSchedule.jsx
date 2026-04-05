@@ -1,4 +1,5 @@
 import "./ProfessorSchedule.scss";
+import PropTypes from "prop-types";
 
 const ProfessorSchedule = ({ scheduleData, professor }) => {
   console.log("Data", scheduleData);
@@ -19,7 +20,7 @@ const ProfessorSchedule = ({ scheduleData, professor }) => {
           </tr>
         </thead>
         <tbody>
-          {scheduleData.map((item, index) => (
+          {scheduleData.map((item) => (
             <tr key={item.classId}>
               <td>{item.classDay}</td>
               <td>
@@ -29,8 +30,8 @@ const ProfessorSchedule = ({ scheduleData, professor }) => {
                 {item.frequency === 0
                   ? "Săptămânal"
                   : item.frequency === 1
-                  ? "Săptămâna impară"
-                  : "Săptămâna pară"}
+                    ? "Săptămâna impară"
+                    : "Săptămâna pară"}
               </td>
               <td>
                 <a href={`#${item.room}`} className="link">
@@ -55,6 +56,24 @@ const ProfessorSchedule = ({ scheduleData, professor }) => {
       </table>
     </div>
   );
+};
+
+ProfessorSchedule.propTypes = {
+  scheduleData: PropTypes.arrayOf(
+    PropTypes.shape({
+      classId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      classDay: PropTypes.string,
+      startHour: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      endHour: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      frequency: PropTypes.number,
+      room: PropTypes.string,
+      formation: PropTypes.string,
+      classType: PropTypes.string,
+      courseInstanceCode: PropTypes.string,
+      courseInstanceName: PropTypes.string,
+    }),
+  ).isRequired,
+  professor: PropTypes.string,
 };
 
 export default ProfessorSchedule;

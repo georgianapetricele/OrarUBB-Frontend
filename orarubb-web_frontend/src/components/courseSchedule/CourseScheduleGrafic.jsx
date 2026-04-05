@@ -1,7 +1,7 @@
-import React from "react";
 import "../professorSchedule/ProfessorSchedule.scss";
+import PropTypes from "prop-types";
 
-export const CourseScheduleGrafic = ({ scheduleData, course }) => {
+export const CourseScheduleGrafic = ({ scheduleData }) => {
   const daysOfWeek = ["Luni", "Marti", "Miercuri", "Joi", "Vineri", "Sambata"];
   const timeSlots = Array.from({ length: 12 }, (_, i) => ({
     start: 8 + i,
@@ -13,15 +13,16 @@ export const CourseScheduleGrafic = ({ scheduleData, course }) => {
       (item) =>
         item.classDay === day &&
         item.startHour <= timeSlot.start &&
-        item.endHour > timeSlot.start
+        item.endHour > timeSlot.start,
     );
 
     const startingClasses = matchingClasses.filter(
-      (item) => item.startHour === timeSlot.start
+      (item) => item.startHour === timeSlot.start,
     );
 
     const ongoingClasses = matchingClasses.filter(
-      (item) => item.startHour < timeSlot.start && item.endHour > timeSlot.start
+      (item) =>
+        item.startHour < timeSlot.start && item.endHour > timeSlot.start,
     );
 
     if (startingClasses.length > 0) {
@@ -46,8 +47,8 @@ export const CourseScheduleGrafic = ({ scheduleData, course }) => {
                 {entry.frequency === 0
                   ? "Săptămânal"
                   : entry.frequency === 1
-                  ? "Săptămâna impară"
-                  : "Săptămâna pară"}
+                    ? "Săptămâna impară"
+                    : "Săptămâna pară"}
                 Cadru didactic: {entry.teacher}
               </div>
             ))}
@@ -85,6 +86,24 @@ export const CourseScheduleGrafic = ({ scheduleData, course }) => {
       </table>
     </div>
   );
+};
+
+CourseScheduleGrafic.propTypes = {
+  scheduleData: PropTypes.arrayOf(
+    PropTypes.shape({
+      classDay: PropTypes.string,
+      startHour: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      endHour: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      frequency: PropTypes.number,
+      room: PropTypes.string,
+      formation: PropTypes.string,
+      year: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      classType: PropTypes.string,
+      teacher: PropTypes.string,
+      courseInstanceName: PropTypes.string,
+      courseInstanceCode: PropTypes.string,
+    }),
+  ).isRequired,
 };
 
 export default CourseScheduleGrafic;

@@ -1,4 +1,4 @@
-@use '../../utils/colors.scss';
+@use "../../utils/colors.scss";
 
 .programs-table-container {
   display: flex;
@@ -11,7 +11,7 @@
 
 .btn-studyprograms {
   margin: 5px;
-  color: #1A4977;
+  color: #1a4977;
   font-weight: 650;
   background: transparent;
 
@@ -25,15 +25,11 @@
   max-width: 1200px;
   color: #333;
   @media (max-width: 1200px) {
-
     margin: 0 6rem;
   }
 
   @media (max-width: 840px) {
     margin: 0 2rem;
-  }
-
-  @media (max-width: 576px) {
   }
 
   thead {
@@ -51,11 +47,11 @@
   tbody {
     tr {
       &:nth-child(even) {
-        background-color: #E1F0FF;
+        background-color: #e1f0ff;
       }
 
       &:nth-child(odd) {
-        background-color: #FFFFFF;
+        background-color: #ffffff;
       }
 
       td {

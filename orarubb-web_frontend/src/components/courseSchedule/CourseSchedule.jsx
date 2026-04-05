@@ -1,7 +1,8 @@
 import { NoDataComponent } from "../NoDataComponent";
+import PropTypes from "prop-types";
 import "../professorSchedule/ProfessorSchedule.scss";
 
-const CourseSchedule = ({ scheduleData, course }) => {
+const CourseSchedule = ({ scheduleData }) => {
   console.log("Data", scheduleData);
   return (
     <div className="professor-schedule-table-container">
@@ -25,7 +26,7 @@ const CourseSchedule = ({ scheduleData, course }) => {
             </tr>
           </thead>
           <tbody>
-            {scheduleData.map((item, index) => (
+            {scheduleData.map((item) => (
               <tr key={item.classId}>
                 <td>{item.classDay}</td>
                 <td>
@@ -35,8 +36,8 @@ const CourseSchedule = ({ scheduleData, course }) => {
                   {item.frequency === 0
                     ? "Săptămânal"
                     : item.frequency === 1
-                    ? "Săptămâna impară"
-                    : "Săptămâna pară"}
+                      ? "Săptămâna impară"
+                      : "Săptămâna pară"}
                 </td>
                 <td>
                   <a href={`#${item.room}`} className="link">
@@ -62,6 +63,24 @@ const CourseSchedule = ({ scheduleData, course }) => {
       )}
     </div>
   );
+};
+
+CourseSchedule.propTypes = {
+  scheduleData: PropTypes.arrayOf(
+    PropTypes.shape({
+      classId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      classDay: PropTypes.string,
+      startHour: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      endHour: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      frequency: PropTypes.number,
+      room: PropTypes.string,
+      formation: PropTypes.string,
+      classType: PropTypes.string,
+      teacher: PropTypes.string,
+      teacherCode: PropTypes.string,
+      courseInstanceName: PropTypes.string,
+    }),
+  ).isRequired,
 };
 
 export default CourseSchedule;

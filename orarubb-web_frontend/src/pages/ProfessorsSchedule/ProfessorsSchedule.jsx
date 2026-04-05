@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Layout from "../../components/layout/Layout";
-import ProfessorSchedule from "../../components/professorSchedule/ProfessorSchedule";
 import ProfessorScheduleGrafic from "../../components/professorSchedule/ProfessorScheduleGrafic";
 import { useParams } from "react-router-dom";
 import { useGetClassesForTeacherQuery } from "../../api/TeachersApi";
@@ -68,7 +67,7 @@ const ProfessorsSchedule = () => {
         <div>
           {view === "tabelar" ? (
             <GroupsScheduleTabelar
-                showHeader={true}
+              showHeader={true}
               scheduleData={scheduleDataForTeacher}
               identity={teacherName}
               tableType={"teacher"}
